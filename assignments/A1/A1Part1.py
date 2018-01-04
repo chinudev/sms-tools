@@ -1,5 +1,6 @@
 import sys
 import os
+import numpy as np
 sys.path.append('../../software/models/')
 from utilFunctions import wavread
 
@@ -25,6 +26,11 @@ array([-0.06213569, -0.04541154, -0.02734458, -0.0093997 ,  0.00769066,	0.023194
 
 import scipy.io.wavfile as wav 
 
+def getNormValue(dataType):
+    if dataType == 'int16': return 2**15 - 1
+    if dataType == 'int32': return 2**31 - 1
+    if dataType == 'int64': return 2**63 - 1
+
 
 def readAudio(inputFile):
     """
@@ -36,16 +42,21 @@ def readAudio(inputFile):
     ## Your code here
 
     (freq, audio) = wav.read(inputFile)
-    print("Info for file : ", inputFile)
-    print("    Sampling rate ", freq)
-    print("    Length (sec) ", audio.size / freq)
+    #print("Info for file : ", inputFile)
+    #print("    Sampling rate ", freq)
+    #print("    Length (sec) ", audio.size / freq)
+
+    audio = np.float32(audio) / getNormValue(audio.dtype.name)
+    #print("    ", audio[50000:50000+10])
+    return audio[50000:50000+10]
 
 
 
 if __name__ == "__main__":
     if (len(sys.argv) == 1):
         print("  Provide one or more wav file names")
-    list(map(readAudio(sys.argv[1:])))
+        exit()
+    print(list(map(readAudio,sys.argv[1:])))
 
 
 

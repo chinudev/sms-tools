@@ -23,4 +23,17 @@ def minMaxAudio(inputFile):
         A tuple of the minimum and the maximum value of the audio samples, like: (min_val, max_val)
     """
     ## Your code here
+    freq, data = wavread(inputFile)
+    minVal = min(data)
+    maxVal = max(data)
+    return (minVal, maxVal)
+
+
+if __name__ == "__main__":
+    if (len(sys.argv) == 1):
+        print("  Provide one or more wav file names")
+        exit()
+    print(list(map(minMaxAudio,sys.argv[1:])))
+
+
 
