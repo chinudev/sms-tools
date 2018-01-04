@@ -3,6 +3,10 @@
 *.pyc
 *.o
 *.py~
+*.obj
+*.pyd
+*.lib
+*.exp
 workspace_dev/*
 workspace/*
 software/models_interface/output_sounds/*.wav
